@@ -61,6 +61,18 @@ rm -r /var/www/html/mirzabotconfig/installer
 |--------|------|
 | 8.3 / 8.4  | اجباری |
 
+پس از نصب با زدن دستور crontab -e کرون جاب های زیر را قرار داده و ذخیره نمائید :
+
+* * * * * php /var/www/html/mirzaprobotconfig/cronbot/NoticationsService.php >/dev/null 2>&1
+*/5 * * * * php /var/www/html/mirzaprobotconfig/cronbot/uptime_panel.php >/dev/null 2>&1
+*/5 * * * * php /var/www/html/mirzaprobotconfig/cronbot/uptime_node.php >/dev/null 2>&1
+*/10 * * * * php /var/www/html/mirzaprobotconfig/cronbot/expireagent.php >/dev/null 2>&1
+*/10 * * * * php /var/www/html/mirzaprobotconfig/cronbot/payment_expire.php >/dev/null 2>&1
+0 * * * * php /var/www/html/mirzaprobotconfig/cronbot/statusday.php >/dev/null 2>&1
+0 3 * * * php /var/www/html/mirzaprobotconfig/cronbot/backupbot.php >/dev/null 2>&1
+*/15 * * * * php /var/www/html/mirzaprobotconfig/cronbot/iranpay1.php >/dev/null 2>&1
+*/15 * * * * php /var/www/html/mirzaprobotconfig/cronbot/plisio.php >/dev/null 2>&1
+
   
 </details>
 
