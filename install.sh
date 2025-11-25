@@ -203,9 +203,9 @@ function immigration_install() {
     show_animated_logo
 
     echo ""
-    type_text_colored "\033[1;32m" "╔════════════════════════════════════════════════╗" 0.01
-    type_text_colored "\033[1;32m" "║      🚀 IMMIGRATION - WEB INSTALLER            ║" 0.01
-    type_text_colored "\033[1;32m" "╚════════════════════════════════════════════════╝" 0.01
+    type_text_colored "\033[1;32m" "╔════════════════════════════════════════════════╗" 0.0001
+    type_text_colored "\033[1;32m" "║      🚀 IMMIGRATION - WEB INSTALLER            ║" 0.0001
+    type_text_colored "\033[1;32m" "╚════════════════════════════════════════════════╝" 0.0001
     echo ""
 
     type_text_colored "\033[1;33m" "Scanning for installed bots in /var/www/html/..."
@@ -263,13 +263,13 @@ function immigration_install() {
         fi
 
         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-        type_text_colored "\033[1;36m" "Processing bot: $BOT_LABEL" 0.03
+        type_text_colored "\033[1;36m" "Processing bot: $BOT_LABEL" 0.0003
         echo ""
 
-        type_text_colored "\033[1;32m" "  ✓ Domain detected: $DOMAIN" 0.03
+        type_text_colored "\033[1;32m" "  ✓ Domain detected: $DOMAIN" 0.0003
         echo ""
 
-        type_text_colored "\033[1;33m" "  Setting file permissions..." 0.03
+        type_text_colored "\033[1;33m" "  Setting file permissions..." 0.0003
 
         if [ -f "$CONFIG_FILE" ]; then
             sudo chmod 666 "$CONFIG_FILE" 2>/dev/null || {
@@ -307,7 +307,7 @@ function immigration_install() {
         fi
 
         if [ -n "$APP_DIR" ] && [ -d "$APP_DIR" ]; then
-            type_text_colored "\033[1;33m" "  Applying permissions to app directory: $APP_DIR" 0.02
+            type_text_colored "\033[1;33m" "  Applying permissions to app directory: $APP_DIR" 0.0002
             sudo chmod 755 "$APP_DIR" 2>/dev/null || {
                 type_text_colored "\033[1;31m" "  ✗ Failed to set directory permissions for app"
                 echo ""
@@ -322,7 +322,7 @@ function immigration_install() {
             }
         fi
 
-        type_text_colored "\033[1;32m" "  ✓ Permissions set successfully" 0.03
+        type_text_colored "\033[1;32m" "  ✓ Permissions set successfully" 0.0003
         echo ""
 
         DOMAIN_TRIMMED="${DOMAIN%/}"
@@ -332,8 +332,8 @@ function immigration_install() {
             INSTALLER_URL="https://${DOMAIN_TRIMMED}/installer/"
         fi
 
-        type_text_colored "\033[1;36m" "  📎 Installer URL:" 0.03
-        type_text_colored "\033[1;33m" "     $INSTALLER_URL" 0.02
+        type_text_colored "\033[1;36m" "  📎 Installer URL:" 0.0003
+        type_text_colored "\033[1;33m" "     $INSTALLER_URL" 0.0002
         echo ""
 
         ((PROCESSED++))
@@ -343,9 +343,9 @@ function immigration_install() {
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo ""
 
-    type_text_colored "\033[1;32m" "╔════════════════════════════════════════════════╗" 0.01
-    type_text_colored "\033[1;32m" "║               SUMMARY                         ║" 0.01
-    type_text_colored "\033[1;32m" "╚════════════════════════════════════════════════╝" 0.01
+    type_text_colored "\033[1;32m" "╔════════════════════════════════════════════════╗" 0.0001
+    type_text_colored "\033[1;32m" "║               SUMMARY                         ║" 0.0001
+    type_text_colored "\033[1;32m" "╚════════════════════════════════════════════════╝" 0.0001
     echo ""
 
     type_text_colored "\033[1;37m" "Total bots found:       $BOT_COUNT"
@@ -368,9 +368,9 @@ function show_menu() {
     show_logo
     check_ssl_status
 
-    type_text_colored "\033[1;32m" "╔════════════════════════════════════════════════╗" 0.005
-    type_text_colored "\033[1;32m" "║            MIRZA PRO - MAIN MENU               ║" 0.005
-    type_text_colored "\033[1;32m" "╠════════════════════════════════════════════════╣" 0.005
+    type_text_colored "\033[1;32m" "╔════════════════════════════════════════════════╗" 0.0005
+    type_text_colored "\033[1;32m" "║            MIRZA PRO - MAIN MENU               ║" 0.0005
+    type_text_colored "\033[1;32m" "╠════════════════════════════════════════════════╣" 0.0005
     print_menu_spacer
     print_menu_option "1)" "Install Mirza Bot"
     print_menu_option "2)" "Update Mirza Bot"
@@ -383,7 +383,7 @@ function show_menu() {
     print_menu_option "9)" "Additional Bot Management"
     print_menu_option "10)" "Immigration (Server Migration)" "1;33"
     print_menu_option "11)" "Exit" "1;31"
-    type_text_colored "\033[1;32m" "╚════════════════════════════════════════════════╝" 0.005
+    type_text_colored "\033[1;32m" "╚════════════════════════════════════════════════╝" 0.0005
     echo ""
     read -p "$(echo -e '\033[1;33m❯\033[0m Select an option [1-11]: ')" option
     case $option in
@@ -398,7 +398,7 @@ function show_menu() {
         9) manage_additional_bots ;;
         10) immigration_install ;;
         11)
-            type_text_colored "\033[1;32m" "✓ Exiting... Goodbye!" 0.05
+            type_text_colored "\033[1;32m" "✓ Exiting... Goodbye!" 0.0005
             exit 0
             ;;
         *)
