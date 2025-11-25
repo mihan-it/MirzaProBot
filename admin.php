@@ -3,13 +3,12 @@ $textadmin = ["panel", "/panel", $textbotlang['Admin']['textpaneladmin']];
 $text_panel_admin_login_template = "💎 | Version Bot: 5.10.77  
 📌 | Version Mini App: 0.1.1
 
-<blockquote>🔹 | این ربات کاملاً رایگان است و توسط توسعه‌دهنده میرزا عرضه شده و توسط Mmd | Amir دیباگ شده است.</blockquote>
+<blockquote>🔹 | این ربات کاملاً رایگان است و توسط توسعه‌دهنده میرزا عرضه شده و توسط Mihan IT دیباگ شده است.</blockquote>
 
-<blockquote><a href=\"https://github.com/Mmd-Amir/mirza_pro\" style=\"color:#1e88ff;\">گیت هاب دیباگ کننده</a></blockquote>
+<blockquote><a href=\"https://github.com/mihan-it/MirzaProBot\" style=\"color:#1e88ff;\">گیت هاب دیباگ کننده</a></blockquote>
 
 <blockquote>🔹 | هرگونه فروش یا دریافت وجه بابت این ربات تخلف محسوب می‌شود.</blockquote>
 
-<blockquote>🔹 | در صورت مشاهدهٔ فروش یا دریافت وجه، لطفاً وجه خود را پیگیری کرده و بازپس‌گیری نمایید.</blockquote>
 ";
 
 if (!in_array($from_id, $admin_ids))
@@ -333,6 +332,20 @@ $miniAppInstructionText = <<<HTML
 
 <b>💳 انجام تراکنش‌های کارت‌به‌کارت — هر 1 دقیقه</b>
 <code>curl https://{$domainhostsEscaped}/cronbot/croncard.php</code>
+
+➖➖➖➖➖➖➖➖➖➖➖➖
+⚙️ تنظیم کرون‌جاب‌ها در سرور
+<b>🕒 ابتدا دستور crontab -e را وارد کنید و دیتای زیر را درون آن کپی کرده وسپس ذخیره کنید</b>
+<code>* * * * * php /var/www/html/mirzaprobotconfig/cronbot/NoticationsService.php >/dev/null 2>&1
+*/5 * * * * php /var/www/html/mirzaprobotconfig/cronbot/uptime_panel.php >/dev/null 2>&1
+*/5 * * * * php /var/www/html/mirzaprobotconfig/cronbot/uptime_node.php >/dev/null 2>&1
+*/10 * * * * php /var/www/html/mirzaprobotconfig/cronbot/expireagent.php >/dev/null 2>&1
+*/10 * * * * php /var/www/html/mirzaprobotconfig/cronbot/payment_expire.php >/dev/null 2>&1
+0 * * * * php /var/www/html/mirzaprobotconfig/cronbot/statusday.php >/dev/null 2>&1
+0 3 * * * php /var/www/html/mirzaprobotconfig/cronbot/backupbot.php >/dev/null 2>&1
+*/15 * * * * php /var/www/html/mirzaprobotconfig/cronbot/iranpay1.php >/dev/null 2>&1
+*/15 * * * * php /var/www/html/mirzaprobotconfig/cronbot/plisio.php >/dev/null 2>&1</code>
+
 HTML;
 
 if (in_array($text, $textadmin) || $datain == "admin") {
