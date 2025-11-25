@@ -3,11 +3,11 @@ $textadmin = ["panel", "/panel", $textbotlang['Admin']['textpaneladmin']];
 $text_panel_admin_login_template = "💎 | Version Bot: 5.10.77  
 📌 | Version Mini App: 0.1.1
 
-<blockquote>🔹 | این ربات کاملاً رایگان است و توسط توسعه‌دهنده میرزا عرضه شده و توسط Mihan IT دیباگ شده است.</blockquote>
+<blockquote>🔹 | نسخه دیباگ شده ربات MirzaPro به صورت استیبل </blockquote>
 
-<blockquote><a href=\"https://github.com/mihan-it/MirzaProBot\" style=\"color:#1e88ff;\">گیت هاب دیباگ کننده</a></blockquote>
+<blockquote><a href=\"https://github.com/mihan-it/MirzaProBot\" style=\"color:#1e88ff;\">دیباگ کننده : Mihan IT</a></blockquote>
 
-<blockquote>🔹 | هرگونه فروش یا دریافت وجه بابت این ربات تخلف محسوب می‌شود.</blockquote>
+<blockquote>🔹 | لطفاً ازفروش ربات خودداری نمائید .</blockquote>
 
 ";
 
@@ -274,7 +274,7 @@ if (!is_array($users_ids)) {
 $domainhostsEscaped = htmlspecialchars($domainhosts, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
 $miniAppInstructionText = <<<HTML
-📌 آموزش فعالسازی مینی اپ در ربات BotFather
+📌 جهت فعالسازی مینی اپ در ربات BotFather
 
 /mybots > Select Bot > Bot Setting >  Configure Mini App > Enable Mini App  > Edit Mini App URL
 
@@ -283,7 +283,7 @@ $miniAppInstructionText = <<<HTML
 <code>https://{$domainhostsEscaped}/app/</code>
 
 ➖➖➖➖➖➖➖➖➖➖➖➖
-⚙️ تنظیم کرون‌جاب‌ها در هاست
+⚙️ تنظیم کرون‌جاب‌ها در سرور
 
 <b>🕒 بررسی وضعیت روزانه — هر 15 دقیقه</b>
 <code>curl https://{$domainhostsEscaped}/cronbot/statusday.php</code>
@@ -336,7 +336,8 @@ $miniAppInstructionText = <<<HTML
 ➖➖➖➖➖➖➖➖➖➖➖➖
 ⚙️ تنظیم کرون‌جاب‌ها در سرور
 <b>🕒 ابتدا دستور crontab -e را وارد کنید و دیتای زیر را درون آن کپی کرده وسپس ذخیره کنید</b>
-<code>* * * * * php /var/www/html/mirzaprobotconfig/cronbot/NoticationsService.php >/dev/null 2>&1
+<code>* * * * * php /var/www/html/mirzaprobotconfig/cronbot/croncard.php >/dev/null 2>&1
+* * * * * php /var/www/html/mirzaprobotconfig/cronbot/NoticationsService.php >/dev/null 2>&1
 */5 * * * * php /var/www/html/mirzaprobotconfig/cronbot/uptime_panel.php >/dev/null 2>&1
 */5 * * * * php /var/www/html/mirzaprobotconfig/cronbot/uptime_node.php >/dev/null 2>&1
 */10 * * * * php /var/www/html/mirzaprobotconfig/cronbot/expireagent.php >/dev/null 2>&1
@@ -344,7 +345,13 @@ $miniAppInstructionText = <<<HTML
 0 * * * * php /var/www/html/mirzaprobotconfig/cronbot/statusday.php >/dev/null 2>&1
 0 3 * * * php /var/www/html/mirzaprobotconfig/cronbot/backupbot.php >/dev/null 2>&1
 */15 * * * * php /var/www/html/mirzaprobotconfig/cronbot/iranpay1.php >/dev/null 2>&1
-*/15 * * * * php /var/www/html/mirzaprobotconfig/cronbot/plisio.php >/dev/null 2>&1</code>
+*/15 * * * * php /var/www/html/mirzaprobotconfig/cronbot/plisio.php >/dev/null 2>&1
+*/2 * * * * php /var/www/html/mirzaprobotconfig/cronbot/configtest.php >/dev/null 2>&1
+*/15 * * * * php /var/www/html/mirzaprobotconfig/cronbot/on_hold.php >/dev/null 2>&1
+*/2 * * * * php /var/www/html/mirzaprobotconfig/cronbot/gift.php >/dev/null 2>&1
+* * * * * php /var/www/html/mirzaprobotconfig/cronbot/disableconfig.php >/dev/null 2>&1
+* * * * * php /var/www/html/mirzaprobotconfig/cronbot/activeconfig.php >/dev/null 2>&1
+* * * * * php /var/www/html/mirzaprobotconfig/cronbot/sendmessage.php >/dev/null 2>&1</code>
 
 HTML;
 
