@@ -70,7 +70,7 @@ function show_animated_logo() {
     type_text_colored "\033[1;31m" "██║░╚═╝░██║ ██║ ██║░░██║ ███████╗ ██║░░██║ ██║░░░░░ ██║░░██║ ╚█████╔╝" 0.0001
     type_text_colored "\033[1;31m" "╚═╝░░░░░╚═╝ ╚═╝ ╚═╝░░╚═╝ ╚══════╝ ╚═╝░░╚═╝ ╚═╝░░░░░ ╚═╝░░╚═╝ ░╚════╝░" 0.0001
     echo ""
-    type_text_colored "\033[1;33m" "                    Mirza Pro Bot Installer v1.0" 0.0002
+    type_text_colored "\033[1;33m" "                    Mirza Pro Bot Installer v1.1" 0.0002
     type_text_colored "\033[1;36m" "                    Developer: Mihan IT" 0.0002
     type_text_colored "\033[1;36m" "                    debugger:  https://github.com/mihan-it/MirzaProBot" 0.0002
     echo ""
