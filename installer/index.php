@@ -5,7 +5,7 @@ $configDirectory = $rootDirectory.'config.php';
 $tablesDirectory = $rootDirectory.'table.php';
 if(!file_exists($configDirectory) || !file_exists($tablesDirectory)) {
     $ERROR[] = "فایل های پروژه ناقص هستند.";
-    $ERROR[] = "فایل های پروژه را مجددا دانلود و بارگذاری کنید (<a href='https://github.com/Mmd-Amir/mirza_pro/releases/'>‎🌐 Github</a>)";
+    $ERROR[] = "فایل های پروژه را مجددا دانلود و بارگذاری کنید (<a href='https://github.com/mihan-it/MirzaProBot/releases/'>‎🌐 Github</a>)";
 }
 if(phpversion() < 8.2){
     $ERROR[] = "نسخه PHP شما باید حداقل 8.2 باشد.";
@@ -958,7 +958,7 @@ try {
         }
         if($replacementCount === 0 || file_put_contents($configDirectory,$newConfigData) === false) {
             $ERROR[] = '✏️❌ خطا در زمان بازنویسی اطلاعات فایل اصلی ربات';
-            $ERROR[] = "فایل های پروژه را مجددا دانلود و بارگذاری کنید (<a href='https://github.com/Mmd-Amir/mirza_pro/releases/'>‎🌐 Github</a>)";
+            $ERROR[] = "فایل های پروژه را مجددا دانلود و بارگذاری کنید (<a href='https://github.com/mihan-it/MirzaProBot/releases/'>‎🌐 Github</a>)";
     }
         else {
             $baseAddress = rtrim($document['address'], '/');
@@ -1219,13 +1219,12 @@ function ensureTableAndColumn(mysqli $mysqli, string $table, string $column): vo
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⚙️ نصب خودکار ربات میرزا پرو</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
         * {
-            font-family: Vazir, sans-serif;
+            font-family: Arad, sans-serif;
         }
         .wizard-steps {
             display: flex;
@@ -1307,7 +1306,7 @@ function ensureTableAndColumn(mysqli $mysqli, string $table, string $column): vo
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            font-family: Vazir, sans-serif;
+            font-family: Arad, sans-serif;
         }
         .wizard-btn-next {
             background: rgba(50, 184, 198, 0.2);
@@ -1467,7 +1466,7 @@ function ensureTableAndColumn(mysqli $mysqli, string $table, string $column): vo
             color: #fff;
             font-size: 15px;
             font-weight: 500;
-            font-family: Vazir, sans-serif;
+            font-family: Arad, sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -1585,7 +1584,7 @@ function ensureTableAndColumn(mysqli $mysqli, string $table, string $column): vo
                         <div class="server-type-card <?php echo ($serverType === 'server') ? 'active' : ''; ?>" data-server-type="server">
                             <input type="radio" name="server_type" value="server" id="server" <?php echo ($serverType === 'server') ? 'checked' : ''; ?>>
                             <h3><i class="fas fa-cloud"></i> سرور</h3>
-                            <p>نصب روی سرور (مسیر: /var/www/html/mirzabotconfig)</p>
+                            <p>نصب روی سرور (مسیر: /var/www/html/)</p>
                         </div>
                     </div>
                 </div>
@@ -1716,7 +1715,7 @@ function ensureTableAndColumn(mysqli $mysqli, string $table, string $column): vo
             <input type="hidden" name="current_install_field" id="current_install_field" value="<?php echo $currentInstallField; ?>">
         </form>
         <footer>
-            <p>MirzabotPro Installer , Made by ♥️ | <a href="https://github.com/Mmd-Amir/mirza_pro/releases/">Github</a> | <a href="https://t.me/+TDJJIwuYUsozMzI0">Telegram</a> | &copy; <?php echo date('Y'); ?></p>
+            <p>MirzabotPro Installer , Made by ♥️ | <a href="https://github.com/mihan-it/MirzaProBot/releases/">Github</a> | <a href="https://t.me/+TDJJIwuYUsozMzI0">Telegram</a> | &copy; <?php echo date('Y'); ?></p>
         </footer>
     </div>
         <script>

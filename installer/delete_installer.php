@@ -30,4 +30,3 @@ register_shutdown_function(function () use ($dir, $scriptPath) {
 header('Location: ../index.php');
 exit();
 ?>
-

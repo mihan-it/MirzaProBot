@@ -242,6 +242,40 @@ if (!function_exists('createForumTopicIfMissing')) {
     }
 }
 
+if (!function_exists('buildExtendCategoryKeyboard')) {
+    function buildExtendCategoryKeyboard(PDO $pdo, $panelName, $agent, $invoiceId, $serviceTimeFilter = null)
+    {
+        $stmt = $pdo->prepare("SELECT id, remark FROM category");
+        $stmt->execute();
+        $keyboardRows = [];
+        while ($category = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $query = "SELECT 1 FROM product WHERE (Location = :location OR Location = '/all') AND agent = :agent AND category = :category AND one_buy_status = '0'";
+            if ($serviceTimeFilter !== null) {
+                $query .= " AND Service_time = :service_time";
+            }
+            $checkStmt = $pdo->prepare($query . " LIMIT 1");
+            $checkStmt->bindValue(':location', $panelName, PDO::PARAM_STR);
+            $checkStmt->bindValue(':agent', $agent, PDO::PARAM_STR);
+            $checkStmt->bindValue(':category', $category['remark'], PDO::PARAM_STR);
+            if ($serviceTimeFilter !== null) {
+                $checkStmt->bindValue(':service_time', $serviceTimeFilter, PDO::PARAM_INT);
+            }
+            $checkStmt->execute();
+            if (!$checkStmt->fetchColumn()) {
+                continue;
+            }
+            $serviceTimeValue = $serviceTimeFilter === null ? '0' : (string)$serviceTimeFilter;
+            $keyboardRows[] = [
+                [
+                    'text' => $category['remark'],
+                    'callback_data' => sprintf('extendcategory_%s_%s_%s', $invoiceId, $serviceTimeValue, $category['id'])
+                ]
+            ];
+        }
+        return $keyboardRows;
+    }
+}
+
 createForumTopicIfMissing($porsantreport, 'porsantreport', $textbotlang['Admin']['affiliates']['titletopic'], $setting['Channel_Report']);
 createForumTopicIfMissing($reportnight, 'reportnight', $textbotlang['Admin']['report']['reportnight'], $setting['Channel_Report']);
 createForumTopicIfMissing($reportcron, 'reportcron', $textbotlang['Admin']['report']['reportcron'], $setting['Channel_Report']);
@@ -1636,10 +1670,26 @@ $stmt->execute([
         return;
     }
     if ($setting['statuscategory'] == "offcategory") {
-        $stmt = $pdo->prepare("SELECT * FROM product WHERE (Location = :service_location OR Location = '/all')");
-        $stmt->execute([
-            ':service_location' => $nameloc['Service_location'],
-        ]);
+        if ($setting['statuscategorygenral'] == "oncategorys") {
+            $categoryRows = buildExtendCategoryKeyboard($pdo, $nameloc['Service_location'], $user['agent'], $nameloc['id_invoice']);
+            if (!empty($categoryRows)) {
+                $categoryRows[] = [
+                    ['text' => "♻️ تمدید پلن فعلی", 'callback_data' => "exntedagei"]
+                ];
+                $categoryRows[] = [
+                    ['text' => "🏠 بازگشت به اطلاعات سرویس", 'callback_data' => "product_" . $nameloc['id_invoice']]
+                ];
+                Editmessagetext($from_id, $message_id, "📌 دسته بندی خود را انتخاب نمایید!", json_encode([
+                    'inline_keyboard' => $categoryRows
+                ]));
+                return;
+            }
+        }
+$stmt = $pdo->prepare("SELECT * FROM product WHERE (Location = :servicelocation OR Location = 'all') AND (agent = :agent OR agent = 'all')");
+$stmt->execute([
+    ':servicelocation' => $nameloc['Service_location'],
+    ':agent' => $user['agent']
+]);
         $productextend = ['inline_keyboard' => []];
         $statusshowprice = select("shopSetting", "*", "Namevalue", "statusshowprice", "select")['value'];
         while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -1707,6 +1757,22 @@ $stmt->execute([
     $monthenumber = $dataget[1];
     $userdate = json_decode($user['Processing_value'], true);
     $nameloc = select("invoice", "*", "id_invoice", $userdate['id_invoice'], "select");
+$categoryRows = [];
+    if ($setting['statuscategorygenral'] == "oncategorys") {
+        $categoryRows = buildExtendCategoryKeyboard($pdo, $nameloc['Service_location'], $user['agent'], $nameloc['id_invoice'], $monthenumber);
+        if (!empty($categoryRows)) {
+            $categoryRows[] = [
+                ['text' => "♻️ تمدید پلن فعلی", 'callback_data' => "exntedagei"]
+            ];
+            $categoryRows[] = [
+                ['text' => "🏠 بازگشت به اطلاعات سرویس", 'callback_data' => "product_" . $nameloc['id_invoice']]
+            ];
+            Editmessagetext($from_id, $message_id, "📌 دسته بندی خود را انتخاب نمایید!", json_encode([
+                'inline_keyboard' => $categoryRows
+            ]));
+            return;
+        }
+    }
 $stmt = $pdo->prepare("SELECT * FROM product WHERE (Location = :service_location OR Location = '/all') AND agent = :agent AND Service_time = :monthe AND one_buy_status = '0'");
 $stmt->execute([
     ':service_location' => $nameloc['Service_location'],
@@ -1743,6 +1809,82 @@ $stmt->execute([
 
     $json_list_product_lists = json_encode($productextend);
     Editmessagetext($from_id, $message_id, $textbotlang['users']['extend']['selectservice'], $json_list_product_lists);
+} elseif (preg_match('/^extendcategory_(\w+)_(\w+)_(\w+)/', $datain, $dataget)) {
+    $extendInvoiceId = $dataget[1];
+    $extendMonth = $dataget[2] !== '0' ? intval($dataget[2]) : null;
+    $categoryId = $dataget[3];
+    $nameloc = select("invoice", "*", "id_invoice", $extendInvoiceId, "select");
+    if ($nameloc == false || $nameloc['id_user'] != $from_id) {
+        if (isset($callback_query_id)) {
+            telegram('answerCallbackQuery', [
+                'callback_query_id' => $callback_query_id,
+                'text' => "دسته بندی نامعتبر است.",
+                'show_alert' => true
+            ]);
+        }
+        return;
+    }
+    $category = select("category", "*", "id", $categoryId, "select");
+    if ($category == false) {
+        if (isset($callback_query_id)) {
+            telegram('answerCallbackQuery', [
+                'callback_query_id' => $callback_query_id,
+                'text' => "این دسته بندی وجود ندارد.",
+                'show_alert' => true
+            ]);
+        }
+        return;
+    }
+    $query = "SELECT * FROM product WHERE (Location = :location OR Location = '/all') AND agent = :agent AND category = :category AND one_buy_status = '0'";
+    if ($extendMonth !== null) {
+        $query .= " AND Service_time = :service_time";
+    }
+    $stmt = $pdo->prepare($query);
+    $stmt->bindValue(':location', $nameloc['Service_location'], PDO::PARAM_STR);
+    $stmt->bindValue(':agent', $user['agent'], PDO::PARAM_STR);
+    $stmt->bindValue(':category', $category['remark'], PDO::PARAM_STR);
+    if ($extendMonth !== null) {
+        $stmt->bindValue(':service_time', $extendMonth, PDO::PARAM_INT);
+    }
+    $stmt->execute();
+    $productextend = ['inline_keyboard' => []];
+    $statusshowprice = select("shopSetting", "*", "Namevalue", "statusshowprice", "select")['value'];
+    while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $hide_panel = json_decode($result['hide_panel'], true);
+        if (is_array($hide_panel) && in_array($nameloc['Service_location'], $hide_panel)) {
+            error_log("Extend category: product {$result['code_product']} hidden for {$nameloc['Service_location']} but still listed.");
+        }
+        if (intval($user['pricediscount']) != 0) {
+            $resultper = ($result['price_product'] * $user['pricediscount']) / 100;
+            $result['price_product'] = $result['price_product'] - $resultper;
+        }
+        if ($statusshowprice == "offshowprice") {
+            $namekeyboard = $result['name_product'];
+        } else {
+            $result['price_product'] = number_format($result['price_product']);
+            $namekeyboard = $result['name_product'] . " - " . $result['price_product'] . "تومان";
+        }
+        $productextend['inline_keyboard'][] = [
+            ['text' => $namekeyboard, 'callback_data' => "serviceextendselect_" . $result['code_product']]
+        ];
+    }
+    if (empty($productextend['inline_keyboard'])) {
+        if (isset($callback_query_id)) {
+            telegram('answerCallbackQuery', [
+                'callback_query_id' => $callback_query_id,
+                'text' => "محصولی برای این دسته بندی یافت نشد.",
+                'show_alert' => true
+            ]);
+        }
+        return;
+    }
+    $productextend['inline_keyboard'][] = [
+        ['text' => "♻️ تمدید پلن فعلی", 'callback_data' => "exntedagei"]
+    ];
+    $productextend['inline_keyboard'][] = [
+        ['text' => "🏠 بازگشت به اطلاعات سرویس", 'callback_data' => "product_" . $nameloc['id_invoice']]
+    ];
+    Editmessagetext($from_id, $message_id, $textbotlang['users']['extend']['selectservice'], json_encode($productextend));
 } elseif (preg_match('/^serviceextendselect_(.*)/', $datain, $dataget) || $user['step'] == "getvolumecustomuserforextend" || $datain == "exntedagei") {
     $userdate = json_decode($user['Processing_value'], true);
     $nameloc = select("invoice", "*", "id_invoice", $userdate['id_invoice'], "select");

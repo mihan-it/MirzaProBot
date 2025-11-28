@@ -701,13 +701,10 @@ select.form-control {
   src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
     format('woff2');
 }
-@font-face {
-    font-family: 'Vazirmatn';
-    src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
+    @font-face {
+      font-family: 'Arad';
+      src: url('./fonts/AradFD-ExtraBold.ttf') format('truetype');
+    }
 
 * {
     margin: 0;
@@ -722,7 +719,7 @@ html {
 }
 
 body {
-    font-family: 'Vazirmatn', var(--font-family-base);
+    font-family: 'Arad', var(--font-family-base);
     background: url('./img/rxmmd.jpeg') center/cover fixed no-repeat;
     min-height: 100vh;
     min-height: 100dvh;
@@ -790,7 +787,7 @@ select {
     width: 100%;
     padding: var(--space-12) var(--space-16);
     font-size: var(--font-size-base);
-    font-family: 'Vazirmatn', var(--font-family-base);
+    font-family: 'Arad', var(--font-family-base);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-base);
     background: rgba(var(--color-slate-900-rgb), 0.08);
@@ -846,7 +843,7 @@ button[type="submit"],
     padding: var(--space-16);
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-bold);
-    font-family: 'Vazirmatn', var(--font-family-base);
+    font-family: 'Arad', var(--font-family-base);
     color: var(--color-btn-primary-text);
     background: var(--color-primary);
     border: none;

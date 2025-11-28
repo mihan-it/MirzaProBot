@@ -303,6 +303,16 @@ try {
     $zip = new ZipArchive();
     if ($zip->open($zip_file_name, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
         $zip->addFile($backup_file_name, basename($backup_file_name));
+
+        $vpnbotPath = $sourcefir . '/vpnbot';
+        if (is_dir($vpnbotPath)) {
+            addPathToZip($zip, $vpnbotPath, $sourcefir . '/');
+        } else {
+            logMessage('WARNING', 'vpnbot directory not found for inclusion in backup zip', [
+                'path' => $vpnbotPath,
+            ]);
+        }
+
         $zip->close();
         if (!file_exists($zip_file_name) || filesize($zip_file_name) === 0) {
             logMessage('ERROR', 'Zip file is empty or does not exist', ['file' => $zip_file_name]);
@@ -324,12 +334,12 @@ try {
             'chat_id' => $setting['Channel_Report'],
             'message_thread_id' => $reportbackup,
             'document' => new CURLFile($zip_file_name),
-            'caption' => "📦 خروجی دیتابیس ربات اصلی\n\nبرای حمایت از این پروژه، لطفاً در گیت‌هاب به آن ستاره (Star) دهید.\n⭐ https://github.com/Mmd-Amir/mirza_pro",
+            'caption' => "📦 خروجی دیتابیس ربات اصلی\n\nبرای حمایت از این پروژه، لطفاً در گیت‌هاب به آن ستاره (Star) دهید.\n⭐ https://github.com/mihan-it/MirzaProBot",
         ]);
 
         logMessage('INFO', 'Telegram sendDocument for DB backup attempted', [
             'result' => $sendResult ? 'success' : 'failed',
-            'caption_length' => strlen("📦 خروجی دیتابیس ربات اصلی\n\nبرای حمایت از این پروژه، لطفاً در گیت‌هاب به آن ستاره (Star) دهید.\n⭐ https://github.com/Mmd-Amir/mirza_pro"),
+            'caption_length' => strlen("📦 خروجی دیتابیس ربات اصلی\n\nبرای حمایت از این پروژه، لطفاً در گیت‌هاب به آن ستاره (Star) دهید.\n⭐ https://github.com/mihan-it/MirzaProBot"),
         ]);
         if (file_exists($zip_file_name)) {
             unlink($zip_file_name);

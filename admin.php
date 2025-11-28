@@ -1,14 +1,13 @@
 <?php
 $textadmin = ["panel", "/panel", $textbotlang['Admin']['textpaneladmin']];
-$text_panel_admin_login_template = "💎 | Version Bot: 5.10.77  
-📌 | Version Mini App: 0.1.1
+$text_panel_admin_login_template = "💎 | Version Debug Bot: 3.2
+📌 | Version Debug Mini App: 1.1
 
 <blockquote>🔹 | نسخه دیباگ شده ربات MirzaPro به صورت استیبل </blockquote>
 
 <blockquote><a href=\"https://github.com/mihan-it/MirzaProBot\" style=\"color:#1e88ff;\">دیباگ کننده : Mihan IT</a></blockquote>
 
 <blockquote>🔹 | لطفاً ازفروش ربات خودداری نمائید .</blockquote>
-
 ";
 
 if (!in_array($from_id, $admin_ids))
@@ -283,7 +282,7 @@ $miniAppInstructionText = <<<HTML
 <code>https://{$domainhostsEscaped}/app/</code>
 
 ➖➖➖➖➖➖➖➖➖➖➖➖
-⚙️ تنظیم کرون‌جاب‌ها در سرور
+⚙️ تنظیم کرون‌جاب‌ها در هاست
 
 <b>🕒 بررسی وضعیت روزانه — هر 15 دقیقه</b>
 <code>curl https://{$domainhostsEscaped}/cronbot/statusday.php</code>
